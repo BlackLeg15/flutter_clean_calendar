@@ -15,6 +15,7 @@ class CalendarTile extends StatelessWidget {
   final Color selectedColor;
   final Color eventColor;
   final Color eventDoneColor;
+  final bool showInlineItems;
 
   CalendarTile({
     this.onDateSelected,
@@ -23,39 +24,56 @@ class CalendarTile extends StatelessWidget {
     this.dateStyles,
     this.dayOfWeek,
     this.dayOfWeekStyles,
-    this.isDayOfWeek: false,
-    this.isSelected: false,
-    this.inMonth: true,
+    this.isDayOfWeek = false,
+    this.isSelected = false,
+    this.inMonth = true,
     this.events,
     this.selectedColor,
     this.eventColor,
     this.eventDoneColor,
+    this.showInlineItems = true,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
+    var eventCount = 0;
     if (isDayOfWeek) {
-      return new InkWell(
-        child: new Container(
+      return InkWell(
+        child: Container(
           alignment: Alignment.center,
-          child: new Text(
+          child: Text(
             dayOfWeek,
             style: dayOfWeekStyles,
           ),
         ),
       );
     } else {
-      int eventCount = 0;
       return InkWell(
         onTap: onDateSelected,
         child: Container(
+          margin: EdgeInsets.all(0.5),
           decoration: isSelected
               ? BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: selectedColor != null
-                      ? selectedColor
-                      : Theme.of(context).primaryColor,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(
+                      style: BorderStyle.solid,
+                      width: 2,
+                      color: selectedColor != null
+                          ? selectedColor
+                          : Theme.of(context).primaryColor),
+                  color: events == null
+                      ? Colors.grey[200]
+                      : events.any((item) => item['isDone'])
+                          ? Colors.green[200]
+                          : Colors.red[200],
                 )
-              : BoxDecoration(),
+              : BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: events == null
+                      ? Colors.grey[200]
+                      : events.any((item) => item['isDone'])
+                          ? Colors.green[200]
+                          : Colors.red[200],
+                ),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +85,7 @@ class CalendarTile extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     color: inMonth ? Colors.black : Colors.grey),
               ),
-              events != null && events.length > 0
+              showInlineItems && events != null && events.length > 0
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: events.map((event) {
@@ -98,12 +116,12 @@ class CalendarTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (child != null) {
-      return new InkWell(
+      return InkWell(
         child: child,
         onTap: onDateSelected,
       );
     }
-    return new Container(
+    return Container(
       child: renderDateOrDayOfWeek(context),
     );
   }

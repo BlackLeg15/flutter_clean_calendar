@@ -26,20 +26,26 @@ class Calendar extends StatefulWidget {
   final Color eventDoneColor;
   final DateTime initialDate;
   final bool isExpanded;
+  final bool showInlineItems;
+  final Color titleTextColor;
+  final Color titleBackgroundColor;
 
   Calendar({
     this.onDateSelected,
     this.onRangeSelected,
-    this.isExpandable: false,
+    this.isExpandable = false,
     this.events,
     this.dayBuilder,
-    this.showTodayIcon: true,
-    this.showArrows: true,
+    this.showTodayIcon = true,
+    this.showArrows = true,
     this.selectedColor,
     this.eventColor,
     this.eventDoneColor,
     this.initialDate,
     this.isExpanded = false,
+    this.showInlineItems = true,
+    this.titleTextColor = Colors.white,
+    this.titleBackgroundColor = Colors.green,
   });
 
   @override
@@ -55,8 +61,6 @@ class _CalendarState extends State<Calendar> {
   bool isExpanded = false;
   String displayMonth;
   DateTime get selectedDate => _selectedDate;
-
-  
 
   void initState() {
     super.initState();
@@ -80,11 +84,17 @@ class _CalendarState extends State<Calendar> {
     if (widget.showArrows) {
       leftArrow = IconButton(
         onPressed: isExpanded ? previousMonth : previousWeek,
-        icon: Icon(Icons.chevron_left),
+        icon: Icon(
+          Icons.chevron_left,
+          color: widget.titleTextColor,
+        ),
       );
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
-        icon: Icon(Icons.chevron_right),
+        icon: Icon(
+          Icons.chevron_right,
+          color: widget.titleTextColor,
+        ),
       );
     } else {
       leftArrow = Container();
@@ -100,23 +110,27 @@ class _CalendarState extends State<Calendar> {
       todayIcon = Container();
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        leftArrow ?? Container(),
-        Column(
-          children: <Widget>[
-            todayIcon ?? Container(),
-            Text(
-              displayMonth,
-              style: TextStyle(
-                fontSize: 20.0,
+    return Container(
+      color: widget.titleBackgroundColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          leftArrow ?? Container(),
+          Column(
+            children: <Widget>[
+              todayIcon ?? Container(),
+              Text(
+                displayMonth,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: widget.titleTextColor,
+                ),
               ),
-            ),
-          ],
-        ),
-        rightArrow ?? Container(),
-      ],
+            ],
+          ),
+          rightArrow ?? Container(),
+        ],
+      ),
     );
   }
 
@@ -160,6 +174,7 @@ class _CalendarState extends State<Calendar> {
             events: widget.events[day],
             isDayOfWeek: true,
             dayOfWeek: day,
+            showInlineItems: widget.showInlineItems,
           ),
         );
       },
@@ -194,20 +209,23 @@ class _CalendarState extends State<Calendar> {
               child: this.widget.dayBuilder(context, day),
               date: day,
               onDateSelected: () => handleSelectedDateAndUserCallback(day),
+              showInlineItems: widget.showInlineItems,
             ),
           );
         } else {
           dayWidgets.add(
             CalendarTile(
-                selectedColor: widget.selectedColor,
-                eventColor: widget.eventColor,
-                eventDoneColor: widget.eventDoneColor,
-                events: widget.events[day],
-                onDateSelected: () => handleSelectedDateAndUserCallback(day),
-                date: day,
-                dateStyles: configureDateStyle(monthStarted, monthEnded),
-                isSelected: Utils.isSameDay(selectedDate, day),
-                inMonth: day.month == selectedDate.month),
+              selectedColor: widget.selectedColor,
+              eventColor: widget.eventColor,
+              eventDoneColor: widget.eventDoneColor,
+              events: widget.events[day],
+              onDateSelected: () => handleSelectedDateAndUserCallback(day),
+              date: day,
+              dateStyles: configureDateStyle(monthStarted, monthEnded),
+              isSelected: Utils.isSameDay(selectedDate, day),
+              inMonth: day.month == selectedDate.month,
+              showInlineItems: widget.showInlineItems,
+            ),
           );
         }
       },
@@ -217,7 +235,7 @@ class _CalendarState extends State<Calendar> {
 
   TextStyle configureDateStyle(monthStarted, monthEnded) {
     TextStyle dateStyles;
-    final TextStyle body1Style = Theme.of(context).textTheme.body1;
+    final TextStyle body1Style = Theme.of(context).textTheme.bodyText2;
 
     if (isExpanded) {
       final TextStyle body1StyleDisabled = body1Style.copyWith(

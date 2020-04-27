@@ -17,15 +17,24 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  dio: ^3.0.9
+  flutter_mobx: ^1.1.0
+  mobx: ^1.1.1
+  flutter_modular: ^1.1.2
+  
+  flutter_clean_calendar:
+    path: ../../flutter_clean_calendar
+
   flutter:
     sdk: flutter
-  flutter_clean_calendar:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
 
 dev_dependencies:
+  mockito: ^4.1.1
+  mobx_codegen: ^1.0.3
+  build_runner: ^1.9.0
   flutter_test:
     sdk: flutter
 
