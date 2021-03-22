@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
 
 class CalendarTile extends StatelessWidget {
-  final VoidCallback onDateSelected;
-  final DateTime date;
-  final String dayOfWeek;
+  final VoidCallback? onDateSelected;
+  final DateTime? date;
+  final String? dayOfWeek;
   final bool isDayOfWeek;
   final bool isSelected;
   final bool inMonth;
-  final List<Map> events;
-  final TextStyle dayOfWeekStyles;
-  final TextStyle dateStyles;
-  final Widget child;
-  final Color selectedColor;
-  final Color eventColor;
-  final Color eventDoneColor;
+  final List<Map>? events;
+  final TextStyle? dayOfWeekStyles;
+  final TextStyle? dateStyles;
+  final Widget? child;
+  final Color? selectedColor;
+  final Color? eventColor;
+  final Color? eventDoneColor;
   final bool showInlineItems;
 
   CalendarTile({
@@ -41,7 +41,7 @@ class CalendarTile extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           child: Text(
-            dayOfWeek,
+            dayOfWeek!,
             style: dayOfWeekStyles,
           ),
         ),
@@ -54,15 +54,10 @@ class CalendarTile extends StatelessWidget {
           decoration: isSelected
               ? BoxDecoration(
                   shape: BoxShape.rectangle,
-                  border: Border.all(
-                      style: BorderStyle.solid,
-                      width: 2,
-                      color: selectedColor != null
-                          ? selectedColor
-                          : Theme.of(context).primaryColor),
+                  border: Border.all(style: BorderStyle.solid, width: 2, color: selectedColor != null ? selectedColor! : Theme.of(context).primaryColor),
                   color: events == null
                       ? Colors.grey[200]
-                      : events.any((item) => item['isDone'])
+                      : events!.any((item) => item['isDone'])
                           ? Colors.green[200]
                           : Colors.red[200],
                 )
@@ -70,7 +65,7 @@ class CalendarTile extends StatelessWidget {
                   shape: BoxShape.rectangle,
                   color: events == null
                       ? Colors.grey[200]
-                      : events.any((item) => item['isDone'])
+                      : events!.any((item) => item['isDone'])
                           ? Colors.green[200]
                           : Colors.red[200],
                 ),
@@ -80,28 +75,21 @@ class CalendarTile extends StatelessWidget {
             children: <Widget>[
               Text(
                 Utils.formatDay(date).toString(),
-                style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                    color: inMonth ? Colors.black : Colors.grey),
+                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: inMonth ? Colors.black : Colors.grey),
               ),
-              showInlineItems && events != null && events.length > 0
+              showInlineItems && events != null && events!.length > 0
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: events.map((event) {
+                      children: events!.map((event) {
                         eventCount++;
                         if (eventCount > 3) return Container();
                         return Container(
-                          margin:
-                              EdgeInsets.only(left: 2.0, right: 2.0, top: 3.0),
+                          margin: EdgeInsets.only(left: 2.0, right: 2.0, top: 3.0),
                           width: 6.0,
                           height: 6.0,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: event['isDone']
-                                ? eventDoneColor ??
-                                    Theme.of(context).primaryColor
-                                : eventColor ?? Theme.of(context).accentColor,
+                            color: event['isDone'] ? eventDoneColor ?? Theme.of(context).primaryColor : eventColor ?? Theme.of(context).accentColor,
                           ),
                         );
                       }).toList())
