@@ -5,7 +5,7 @@ import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
-  const HomePage({Key key, this.title = "Home"}) : super(key: key);
+  const HomePage({Key? key, this.title = "Home"}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,33 +20,69 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
     print(_selectedEvents);
   }
 
-  List _selectedEvents;
-  DateTime _selectedDay;
+  List? _selectedEvents;
+  DateTime? _selectedDay;
 
   final Map _events = {
     DateTime(2020, 4, 29): [
-      {'name': 'Event A', 'isDone': true},
+      {
+        'name': 'Event A',
+        'isDone': true
+      },
     ],
     DateTime(2020, 4, 24): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
+      {
+        'name': 'Event A',
+        'isDone': true
+      },
+      {
+        'name': 'Event B',
+        'isDone': true
+      },
     ],
     DateTime(2020, 4, 28): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
+      {
+        'name': 'Event A',
+        'isDone': true
+      },
+      {
+        'name': 'Event B',
+        'isDone': true
+      },
     ],
     DateTime(2020, 4, 25): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
-      {'name': 'Event C', 'isDone': false},
+      {
+        'name': 'Event A',
+        'isDone': true
+      },
+      {
+        'name': 'Event B',
+        'isDone': true
+      },
+      {
+        'name': 'Event C',
+        'isDone': false
+      },
     ],
     DateTime(2020, 4, 26): [
-      {'name': 'Event A', 'isDone': true},
-      {'name': 'Event B', 'isDone': true},
-      {'name': 'Event C', 'isDone': false},
+      {
+        'name': 'Event A',
+        'isDone': true
+      },
+      {
+        'name': 'Event B',
+        'isDone': true
+      },
+      {
+        'name': 'Event C',
+        'isDone': false
+      },
     ],
     DateTime(2020, 4, 27): [
-      {'name': 'Event A', 'isDone': false},
+      {
+        'name': 'Event A',
+        'isDone': false
+      },
     ],
   };
 
@@ -72,8 +108,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               child: Calendar(
                 isExpanded: true,
                 events: _events,
-                onRangeSelected: (range) =>
-                    print("Range is ${range.from}, ${range.to}"),
+                onRangeSelected: (range) => print("Range is ${range.from}, ${range.to}"),
                 onDateSelected: (date) => _handleNewDate(date),
                 isExpandable: false,
                 showTodayIcon: false,
@@ -100,13 +135,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
           child: ListTile(
-            title: Text(_selectedEvents[index]['name'].toString() +
-                ' ' +
-                _selectedEvents[index]['isDone'].toString()),
+            title: Text(_selectedEvents![index]['name'].toString() + ' ' + _selectedEvents![index]['isDone'].toString()),
             onTap: () {},
           ),
         ),
-        itemCount: _selectedEvents.length,
+        itemCount: _selectedEvents!.length,
       ),
     );
   }
