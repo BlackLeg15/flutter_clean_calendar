@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:date_utils/date_utils.dart';
+import 'package:date_utils/date_utils.dart' as date_utils;
 
 class CalendarTile extends StatelessWidget {
   final VoidCallback? onDateSelected;
@@ -73,10 +73,11 @@ class CalendarTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                Utils.formatDay(date).toString(),
-                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: inMonth ? Colors.black : Colors.grey),
-              ),
+              if (date != null)
+                Text(
+                  date_utils.DateUtils.formatDay(date!).toString(),
+                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400, color: inMonth ? Colors.black : Colors.grey),
+                ),
               showInlineItems && events != null && events!.length > 0
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,

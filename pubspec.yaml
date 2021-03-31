@@ -3,6 +3,7 @@ description: Simple and clean flutter calendar with ability to slide up/down to 
 version: 1.0.1
 author: "Carlos Peña <pmcarlosdev@gmail.com>"
 homepage: "https://github.com/pmcarlos/flutter_clean_calendar"
+publish_to: none
 
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
@@ -11,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   date_utils:
+    git:
+      url: https://github.com/BlackLeg15/date_utils.git
 
 dev_dependencies:
   flutter_test:

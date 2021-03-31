@@ -172,10 +172,12 @@ packages:
   date_utils:
     dependency: transitive
     description:
-      name: date_utils
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0+3"
+      path: "."
+      ref: HEAD
+      resolved-ref: ea20735c6ac93b5539164305896562b84c330d2b
+      url: "https://github.com/BlackLeg15/date_utils.git"
+    source: git
+    version: "1.0.0+4"
   dio:
     dependency: "direct main"
     description:
@@ -276,7 +278,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.17.0"
   io:
     dependency: transitive
     description:
